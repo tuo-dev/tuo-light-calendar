@@ -2,8 +2,7 @@
 light calendar
 
 ## Screenshot
-![light-calendar-ko](https://github.com/tuo-dev/for-photo-storage/assets/137742986/d1970b63-6c9d-4e8e-b37f-bafbec5c0bac)
-![light-calendar-en](https://github.com/tuo-dev/for-photo-storage/assets/137742986/e987d4d2-0cc9-4747-bca8-86496c5e8b18)
+![light-calendar](https://github.com/tuo-dev/for-photo-storage/assets/137742986/ead52d60-dcdc-4b44-a840-3c33741b0e21)
 
 
 ## Development
