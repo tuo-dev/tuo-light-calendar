@@ -2,7 +2,8 @@
 light calendar
 
 ## Screenshot
-![tuo-light-calendar](https://github.com/tuo-dev/for-photo-storage/assets/137742986/55cc5775-b61e-40d4-8b31-00c36a21ab6f)
+![light-calendar-ko](https://github.com/tuo-dev/for-photo-storage/assets/137742986/d1970b63-6c9d-4e8e-b37f-bafbec5c0bac)
+![light-calendar-en](https://github.com/tuo-dev/for-photo-storage/assets/137742986/e987d4d2-0cc9-4747-bca8-86496c5e8b18)
 
 
 ## Development
@@ -41,6 +42,7 @@ return (
 
 | name | description | type | defalut | 
 | --- | --- | --- | --- |
+| language | language of header and day text | 'en' / 'ko' | 'en' |
 | selectedDate | currently selected date | Date | |
 | onDateChange | changing selectedDate when selecting a date | (date:Date) => void | |
 | disableDateClick | disable selecting a date | boolean | false |

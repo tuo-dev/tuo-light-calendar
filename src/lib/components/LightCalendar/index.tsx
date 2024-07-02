@@ -2,7 +2,8 @@ import { useMemo } from "react";
 
 import './index.scss';
 
-const DAY_LIST = ['일','월','화','수','목','금','토'];
+const DAY_LIST_KO = ['일','월','화','수','목','금','토'];
+const DAY_LIST_EN = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
 
 type CellType = {
   value: Date;
@@ -10,6 +11,7 @@ type CellType = {
 }
 
 interface ILightCalendarProps{
+  language?: 'en' | 'ko'
   selectedDate: Date;
   onDateChange: (date:Date) => void;
   disableDateClick?: boolean;
@@ -28,10 +30,11 @@ interface ILightCalendarProps{
     selected?: string;
   }
   className?:string
-  cellTextClassName?: string; 
+  cellTextClassName?: string;
 }
 
 const LightCalendar = ({
+  language = 'en',
   containerSize = {width: '100%', height: '100%'},
   selectedDate,
   onDateChange,
@@ -108,6 +111,24 @@ const LightCalendar = ({
     return {year, month, cells}
   },[selectedDate])
 
+  const enMonth = useMemo(() => {
+    switch (month) {
+      case (0) : return 'JAN'
+      case (1) : return 'FEB'
+      case (2) : return 'MAR'
+      case (3) : return 'APR'
+      case (4) : return 'MAY'
+      case (5) : return 'JUN'
+      case (6) : return 'JUL'
+      case (7) : return 'AUG'
+      case (8) : return 'SEP'
+      case (9) : return 'OCT'
+      case (10) : return 'NOV'
+      case (11) : return 'DEC'
+    }
+},[language, month]);
+
+
   return (
     <div
       className={`light-calendar-container ${className}`}
@@ -115,9 +136,9 @@ const LightCalendar = ({
     >
       <header>
         <div className="paginate-buttons">
-          <button className="today-button" onClick={handleToday}>오늘</button>
+          <button className="today-button" onClick={handleToday}>{language === 'en' ? 'today' : '오늘'}</button>
           <button className="arrow-button" onClick={() => handleMonthClick('prev')}>&lt;</button>
-          <div className="year-month">{year}년 {month + 1}월</div> 
+          <div className="year-month">{language === 'en' ? `${enMonth} ${year}` : `${year}년 ${month + 1}월`}</div> 
           <button
             className="arrow-button"
             onClick={() => handleMonthClick('next')}
@@ -128,7 +149,7 @@ const LightCalendar = ({
       <table className="light-calendar">
         <thead>
           <tr>
-            {DAY_LIST.map((day,index) => (
+            {(language === 'en' ? DAY_LIST_EN : DAY_LIST_KO).map((day,index) => (
               <th key={index}>
                 <p
                   className="day-text"
