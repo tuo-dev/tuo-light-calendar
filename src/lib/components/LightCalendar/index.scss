@@ -86,7 +86,7 @@
       width: calc(100% / 7);
       height: calc(100% / 6);
 
-      .date-text {
+      .date-button {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -97,8 +97,8 @@
         cursor: pointer;
         font-family: Pretendard-Regular;
 
-        &.prev, &.next {
-          opacity: 0.7;
+        &.different {
+          opacity: 0.4;
         }
 
         &.sunday {

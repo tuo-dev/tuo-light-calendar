@@ -16,7 +16,6 @@ interface ILightCalendarProps{
   onDateChange: (date:Date) => void;
   disableDateClick?: boolean;
   disableFuture?: boolean;
-  differentMonthOpacity?: number;
   containerSize?: {
     width: string;
     height: string;
@@ -26,13 +25,14 @@ interface ILightCalendarProps{
     today?: string;
     selected?: string;
   }
-  selectedFontColor?: string;
   classNames?: {
     container?: string; 
     day?: string;
     date?: string;
+    differentMonth?: string;
+    sunday? :string;
   }
-  customHeader?: (dateText: string, handleMonth: (direction: 'prev' | 'next') => void, todayClick: () => void) => JSX.Element;
+  customHeader?: (dateText: string, handleMonth: (direction: 'prev' | 'next') => void, todayClick: () => void, futureDisabled: boolean) => JSX.Element;
 }
 
 const LightCalendar = ({
@@ -44,7 +44,6 @@ const LightCalendar = ({
   disableFuture = false,
   cellSize = 40,
   cellColor = {today: '#EDEDED', selected: '#ADD8E6'},
-  selectedFontColor = '#333333',
   classNames,
   customHeader
 }: ILightCalendarProps) => {
@@ -141,6 +140,7 @@ const LightCalendar = ({
           language === 'en' ? `${enMonth} ${year}` : `${year}년 ${month + 1}월`,
           handleMonthClick,
           handleToday,
+          disableFuture && new Date() <= new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1)
         ) :  
         <header>
           <div className="paginate-buttons">
@@ -175,12 +175,16 @@ const LightCalendar = ({
                     return (
                       <td key={index}>
                         <button
-                          className={`date-text ${cell.type} ${index % 7 === 0 ? 'sunday' : ''} ${classNames?.date ? classNames.date : ''}}`}
+                          className={
+                            `date-button
+                            ${cell.type !== 'current' && classNames?.differentMonth ? classNames.differentMonth : cell.type !== 'current' ? 'different' : ''}
+                            ${index % 7 === 0 ? 'sunday' : ''}
+                            ${classNames?.date ? classNames.date : ''}`
+                          }
                           style={{
                             width: `${cellSize}px`,
                             height: `${cellSize}px`,
                             cursor: `${disableDateClick ? 'default' : 'pointer'}`,
-                            color: `${compareDate(cell.value, selectedDate) && selectedFontColor }`,
                             backgroundColor : 
                             disableDateClick && compareDate(cell.value, new Date()) ? cellColor.today
                             : disableDateClick ? 'transparent'
