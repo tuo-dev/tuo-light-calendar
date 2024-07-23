@@ -50,5 +50,5 @@ return (
 | cellSize | width and height of the selection area and today's date area (px) | number | 40 |
 | cellColor | background color of each of the selection area and today's date area | {today: stirng, selected: string} | {today: '#EDEDED', selected: '#ADD8E6'} |
 | selectedFontColor | font color of the selected date | string | '#333333' |
-| classNames | additional css class of calendar container and the text for day and date  | {contanier?: stirng, day?: string, date?: string, differentMonth?: string, sunday?: string} | |
+| classNames | additional css class of calendar container and the text for day and date  | {contanier: stirng, day?: string, today?: string, date?: string, differentMonth?: string, sunday?: string} | |
 | customHeader | customize the header | (dateText: string, handleMonth: (direction: 'prev' | 'next') => void, clickToday: () => void, futureDisabled: boolean) => JSX.Element | |

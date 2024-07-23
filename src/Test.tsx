@@ -9,9 +9,7 @@ const Test = () => {
         language='ko'
         selectedDate={date}
         onDateChange={setDate}
-        classNames={{
-          date: 'date-text'
-        }}
+        disableFuture
       />
     </div>
   )

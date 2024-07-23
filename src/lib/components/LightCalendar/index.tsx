@@ -26,9 +26,10 @@ interface ILightCalendarProps{
     selected?: string;
   }
   classNames?: {
-    container?: string; 
+    container: string; 
     day?: string;
     date?: string;
+    today?: string;
     differentMonth?: string;
     sunday? :string;
   }
@@ -80,6 +81,7 @@ const LightCalendar = ({
   }
 
   const {year, month, cells} = useMemo(() => {
+    const today = new Date();
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth();
 
@@ -101,7 +103,9 @@ const LightCalendar = ({
     }
 
     for (let i = 1; i <= currentDate; i++) {
-      cells.push({ value: (new Date(year,month, i)), type: 'current' });
+      const date = new Date(year, month ,i)
+      const type = !disableFuture ? 'current' : date < today ? 'current' : 'next'
+      cells.push({ value: date, type: type });
       count += 1;
     }
     
@@ -177,9 +181,12 @@ const LightCalendar = ({
                         <button
                           className={
                             `date-button
-                            ${cell.type !== 'current' && classNames?.differentMonth ? classNames.differentMonth : cell.type !== 'current' ? 'different' : ''}
+                            ${(cell.type !== 'current' && classNames?.differentMonth) ? classNames.differentMonth : cell.type !== 'current' ? 'different' : ''}
                             ${index % 7 === 0 && classNames?.sunday? classNames?.sunday :  index % 7 === 0 ? 'sunday' : ''}
-                            ${classNames?.date ? classNames.date : ''}`
+                            ${classNames?.date ? classNames.date : ''}
+                            ${(compareDate(cell.value, new Date()) && classNames?.today) ? classNames?.today : ''}
+                            ${new Date() < cell.value && disableFuture ? 'future' : ''}
+                            `
                           }
                           style={{
                             width: `${cellSize}px`,

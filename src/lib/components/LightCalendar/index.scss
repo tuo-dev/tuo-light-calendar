@@ -104,6 +104,10 @@
         &.sunday {
           color:red;
         }
+
+        &.future {
+          pointer-events: none;
+        }
       }
 
       .render-contents-container {
