@@ -178,7 +178,7 @@ const LightCalendar = ({
                           className={
                             `date-button
                             ${cell.type !== 'current' && classNames?.differentMonth ? classNames.differentMonth : cell.type !== 'current' ? 'different' : ''}
-                            ${index % 7 === 0 ? 'sunday' : ''}
+                            ${index % 7 === 0 && classNames?.sunday? classNames?.sunday :  index % 7 === 0 ? 'sunday' : ''}
                             ${classNames?.date ? classNames.date : ''}`
                           }
                           style={{
