@@ -16,21 +16,23 @@ interface ILightCalendarProps{
   onDateChange: (date:Date) => void;
   disableDateClick?: boolean;
   disableFuture?: boolean;
+  differentMonthOpacity?: number;
   containerSize?: {
     width: string;
     height: string;
-  }
-  fontSize?: {
-    day?: number;
-    date?: number;
   }
   cellSize?: number;
   cellColor?: {
     today?: string;
     selected?: string;
   }
-  className?:string
-  cellTextClassName?: string;
+  selectedFontColor?: string;
+  classNames?: {
+    container?: string; 
+    day?: string;
+    date?: string;
+  }
+  customHeader?: (dateText: string, handleMonth: (direction: 'prev' | 'next') => void, todayClick: () => void) => JSX.Element;
 }
 
 const LightCalendar = ({
@@ -40,11 +42,11 @@ const LightCalendar = ({
   onDateChange,
   disableDateClick = false,
   disableFuture = false,
-  fontSize = {day: 14, date: 14},
   cellSize = 40,
   cellColor = {today: '#EDEDED', selected: '#ADD8E6'},
-  className,
-  cellTextClassName
+  selectedFontColor = '#333333',
+  classNames,
+  customHeader
 }: ILightCalendarProps) => {
 
   const dateToText = (date: Date) => {
@@ -131,30 +133,34 @@ const LightCalendar = ({
 
   return (
     <div
-      className={`light-calendar-container ${className}`}
+      className={`light-calendar-container ${classNames?.container ? classNames.container : ''}`}
       style={{width: containerSize.width, height: containerSize.height}}
     >
-      <header>
-        <div className="paginate-buttons">
-          <button className="today-button" onClick={handleToday}>{language === 'en' ? 'today' : '오늘'}</button>
-          <button className="arrow-button" onClick={() => handleMonthClick('prev')}>&lt;</button>
-          <div className="year-month">{language === 'en' ? `${enMonth} ${year}` : `${year}년 ${month + 1}월`}</div> 
-          <button
-            className="arrow-button"
-            onClick={() => handleMonthClick('next')}
-            disabled={disableFuture && new Date() <= new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1)}
-          >&gt;</button>
-        </div>
-      </header>
+      {customHeader ?
+        customHeader(
+          language === 'en' ? `${enMonth} ${year}` : `${year}년 ${month + 1}월`,
+          handleMonthClick,
+          handleToday,
+        ) :  
+        <header>
+          <div className="paginate-buttons">
+            <button className="today-button" onClick={handleToday}>{language === 'en' ? 'today' : '오늘'}</button>
+            <button className="arrow-button" onClick={() => handleMonthClick('prev')}>&lt;</button>
+            <div className="year-month">{language === 'en' ? `${enMonth} ${year}` : `${year}년 ${month + 1}월`}</div> 
+            <button
+              className="arrow-button"
+              onClick={() => handleMonthClick('next')}
+              disabled={disableFuture && new Date() <= new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1)}
+            >&gt;</button>
+          </div>
+        </header>
+      }
       <table className="light-calendar">
         <thead>
           <tr>
             {(language === 'en' ? DAY_LIST_EN : DAY_LIST_KO).map((day,index) => (
               <th key={index}>
-                <p
-                  className="day-text"
-                  style={{fontSize: `${fontSize.day}px`}}
-                >
+                <p className={`day-text ${classNames?.day ? classNames.day : ''}`}>
                   {day}
                 </p>
               </th>
@@ -169,13 +175,13 @@ const LightCalendar = ({
                     return (
                       <td key={index}>
                         <button
-                          className={`date-text ${cell.type} ${index % 7 === 0 ? 'sunday' : ''} ${cellTextClassName ? cellTextClassName : ''}}`}
+                          className={`date-text ${cell.type} ${index % 7 === 0 ? 'sunday' : ''} ${classNames?.date ? classNames.date : ''}}`}
                           style={{
                             width: `${cellSize}px`,
                             height: `${cellSize}px`,
-                            fontSize: `${fontSize.date}px`,
                             cursor: `${disableDateClick ? 'default' : 'pointer'}`,
-                            backgroundColor :
+                            color: `${compareDate(cell.value, selectedDate) && selectedFontColor }`,
+                            backgroundColor : 
                             disableDateClick && compareDate(cell.value, new Date()) ? cellColor.today
                             : disableDateClick ? 'transparent'
                             : compareDate(cell.value, selectedDate) ? cellColor.selected

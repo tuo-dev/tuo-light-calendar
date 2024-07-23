@@ -6,8 +6,12 @@ const Test = () => {
   return (
     <div style={{padding: '10px', width: '100%', height: '100%', boxSizing: 'border-box'}}>
       <LightCalendar
+        language='ko'
         selectedDate={date}
         onDateChange={setDate}
+        classNames={{
+          date: 'date-text'
+        }}
       />
     </div>
   )

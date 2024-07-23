@@ -47,8 +47,8 @@ return (
 | disableDateClick | disable selecting a date | boolean | false |
 | disableFuture | disable moving to future months from the current month | boolean | false |
 | containerSize | size of the container including the header and calendar | {width: string, height: string} | {width: '100%', height: '100%'} |
-| fontSize | font size of day and date (px) | {day: number, date: number} | {day: 14, date: 14} |
 | cellSize | width and height of the selection area and today's date area (px) | number | 40 |
-| cellColor | background color of each of the selection area and today's date area | {today: stirng, selected: string} | {today: 'EDEDED', selected: 'ADD8E6'} |
-| className | additional css class of container including the header and calendar | stiring | |
-| cellTextClassName | additional css class of the text in the selection area and today's date area | stiring | |
+| cellColor | background color of each of the selection area and today's date area | {today: stirng, selected: string} | {today: '#EDEDED', selected: '#ADD8E6'} |
+| selectedFontColor | font color of the selected date | string | '#333333' |
+| classNames | additional css class of calendar container and the text for day and date  | {contanier?: stirng, day?:string, date?:string} | |
+| customHeader | customize the header | (dateText: string, handleMonth: (direction: 'prev' | 'next') => void, clickToday: () => void) => JSX.Element | |
