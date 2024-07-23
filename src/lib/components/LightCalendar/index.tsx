@@ -29,7 +29,7 @@ interface ILightCalendarProps{
     container: string; 
     day?: string;
     date?: string;
-    today?: string;
+    current?: string;
     differentMonth?: string;
     sunday? :string;
   }
@@ -184,7 +184,7 @@ const LightCalendar = ({
                             ${(cell.type !== 'current' && classNames?.differentMonth) ? classNames.differentMonth : cell.type !== 'current' ? 'different' : ''}
                             ${index % 7 === 0 && classNames?.sunday? classNames?.sunday :  index % 7 === 0 ? 'sunday' : ''}
                             ${classNames?.date ? classNames.date : ''}
-                            ${(compareDate(cell.value, new Date()) && classNames?.today) ? classNames?.today : ''}
+                            ${(compareDate(cell.value, selectedDate) && classNames?.current) ? classNames?.current : ''}
                             ${new Date() < cell.value && disableFuture ? 'future' : ''}
                             `
                           }
